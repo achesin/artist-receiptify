@@ -12,7 +12,7 @@
 		<div class="container">
 			<div id="login">
 				<h1>Receiptify</h1>
-				<h2>Spotify Playlist Receipt Generator</h2>
+				<h2>Spotify Artist Top Tracks Receipt Generator</h2>
 				<a href="/login" class="login-btn">Log in with Spotify</a>
 				<p class="info">
 					This website was inspired by the Instagram account <a href="https://www.instagram.com/albumreceipts/">@albumreceipts</a>!</p>
@@ -23,7 +23,7 @@
 			</div>
 			<div id="loggedin">
 				<h1>Receiptify</h1>
-				<h2>Spotify Playlist Receipt Generator</h2>
+				<h2>Spotify Artist Top Tracks Receipt Generator</h2>
 				<div id="dropdown"></div>
 				<div id="options">
 					<button class="btn" id="submit">Submit</button>
@@ -80,15 +80,15 @@
 								{{/ifCond}}
 							</td>
 							<td class='name'>
-								{{this.track.name}} -
-								{{#each this.track.artists}}
+								{{this.name}} -
+								{{#each this.artists}}
 									<span>
 										{{this.name}}
 									</span>
 								{{/each}}
 							</td>
 							<td class='length'>
-								{{this.track.duration_ms}}
+								{{this.duration_ms}}
 							</td>
 						</tr>
 					{{/each}}
@@ -116,7 +116,7 @@
 					AUTH CODE: 053183
 				</p>
 				<p class='date'>
-					CARDHOLDER: {{owner}}
+					CARDHOLDER: {{name}}
 				</p>
 				<div class='thanks'>
 					<p>

@@ -57,38 +57,54 @@ var Server = function () {
 		});
 	}
 
-	function retrieveTracks(playlistId) {
+	function retrieveArtist(artistId) {
 		$.ajax({
-			url: `https://api.spotify.com/v1/playlists/${playlistId}?market=US`,
-			// 6mB0KUI2hdFGdSqWvklpQr 'best of 2020'
-			// 0KIPWaDK3jePD5zZDuPG4G 'a playlist of songs i say are the best songs ever written'
+			url: `https://api.spotify.com/v1/artists/${artistId}`,
+			headers: {
+				Authorization: 'Bearer ' + access_token
+			},
+			success: function (response) {
+				console.log(response);
+				var data = {
+					artistName: response.name,
+					json: true
+				};
+				retrieveTopTracks(artistId, data.artistName);
+			},
+			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// error handler here
+				console.error("Failed to access playlist endpoint");
+			}
+		});
+	}
+
+	function retrieveTopTracks(artistId, artistName) {
+		$.ajax({
+			url: `https://api.spotify.com/v1/artists/${artistId}/top-tracks?market=ES`,
 			headers: {
 				Authorization: 'Bearer ' + access_token
 			},
 			success: function (response) {
 				var itemNumber = 1;
 				var data = {
-					title: response.name,
-					trackList: response.tracks.items,
+					trackList: response.tracks,
 					total: 0,
 					date: today.toLocaleDateString('en-US', dateOptions).toUpperCase(),
-					owner: response.owner.display_name,
 					json: true
 				};
-				data.title = data.title.toUpperCase();
-				data.owner = data.owner.toUpperCase();
+				artistName = artistName.toUpperCase();
 				for (var i = 0; i < data.trackList.length; i++) {
-					data.trackList[i].track.name = data.trackList[i].track.name.toUpperCase();
+					data.trackList[i].name = data.trackList[i].name.toUpperCase();
 					data.trackList[i].itemNum = itemNumber;
-					data.total += data.trackList[i].track.duration_ms;
-					let minutes = Math.floor(data.trackList[i].track.duration_ms / 60000);
-					let seconds = ((data.trackList[i].track.duration_ms % 60000) / 1000).toFixed(0);
-					data.trackList[i].track.duration_ms = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
-					for (var j = 0; j < data.trackList[i].track.artists.length; j++) {
-						data.trackList[i].track.artists[j].name = data.trackList[i].track.artists[j].name.trim();
-						data.trackList[i].track.artists[j].name = data.trackList[i].track.artists[j].name.toUpperCase();
-						if (j != data.trackList[i].track.artists.length - 1) {
-							data.trackList[i].track.artists[j].name = data.trackList[i].track.artists[j].name + ', ';
+					data.total += data.trackList[i].duration_ms;
+					let minutes = Math.floor(data.trackList[i].duration_ms / 60000);
+					let seconds = ((data.trackList[i].duration_ms % 60000) / 1000).toFixed(0);
+					data.trackList[i].duration_ms = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+					for (var j = 0; j < data.trackList[i].artists.length; j++) {
+						data.trackList[i].artists[j].name = data.trackList[i].artists[j].name.trim();
+						data.trackList[i].artists[j].name = data.trackList[i].artists[j].name.toUpperCase();
+						if (j != data.trackList[i].artists.length - 1) {
+							data.trackList[i].artists[j].name = data.trackList[i].artists[j].name + ', ';
 						}
 					}
 					itemNumber++;
@@ -98,13 +114,12 @@ var Server = function () {
 				receiptNum++;
 				data.total = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
 				userProfilePlaceholder.innerHTML = userProfileTemplate({
-					title: data.title,
+					title: artistName,
 					tracks: data.trackList,
 					total: data.total,
 					time: data.date,
 					num: receiptNum,
 					name: displayName,
-					owner: data.owner,
 				});
 
 				document.getElementById('download').addEventListener('click', function () {
@@ -186,6 +201,8 @@ var Server = function () {
 			$('#loggedin').hide();
 		}
 
-		document.getElementById("submit").addEventListener("click", function(){ retrievePlaylistId(document.getElementById("selection").elements[0].value); });
+		document.getElementById("submit").addEventListener("click", function(){ retrieveArtist("6ueGR6SWhUJfvEhqkvMsVs"); });
+		// "0TnOYISbd1XYRBk9myaseg" pitbull
+		// "6ueGR6SWhUJfvEhqkvMsVs" janelle monae
 	}
 }();

@@ -1,5 +1,5 @@
 # Receiptify
-Web application inspired by https://www.instagram.com/albumreceipts/ and  https://receiptify.herokuapp.com/. Generates receipts that list out the songs on a playlist of the user's choosing!
+Web application inspired by https://www.instagram.com/albumreceipts/ and  https://receiptify.herokuapp.com/. Generates receipts that list out top 10 tracks from an artist!
 
 I do not take credit for this idea, I just wanted to mess around with the Spotify APIs and see what I could create!
 

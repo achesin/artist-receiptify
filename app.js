@@ -103,6 +103,11 @@ app.get('/callback', function (req, res) {
 					headers: { Authorization: 'Bearer ' + access_token },
 					json: true
 				}
+				var topTracksOptions = {
+					url: 'https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg/top-tracks?market=ES',
+					headers: { Authorization: 'Bearer ' + access_token },
+					json: true
+				}
 				var allPlaylistOptions = {
 					url: 'https://api.spotify.com/v1/me/playlists',
 					headers: { Authorization: 'Bearer ' + access_token },
@@ -122,17 +127,23 @@ app.get('/callback', function (req, res) {
 				// 	}
 				// });
 
-				// request.get(singlePlaylistOptions, function (error, response, body) {
-				// 	for (let i = 0; i < body.tracks.items.length; i++) {
-				// 		console.log(body); // .tracks.items[i].track
+				request.get(singlePlaylistOptions, function (error, response, body) {
+					for (let i = 0; i < body.tracks.items.length; i++) {
+						console.log(body.tracks.items[i].track); // .tracks.items[i].track
+					}
+				});
+
+				// request.get(allPlaylistOptions, function (error, response, body) {
+				// 	for (let i = 0; i < body.items.length; i++) {
+				// 		console.log(body.items[i].name);
 				// 	}
 				// });
 
-				request.get(allPlaylistOptions, function (error, response, body) {
-					for (let i = 0; i < body.items.length; i++) {
-						console.log(body.items[i].name);
-					}
-				});
+				// request.get(topTracksOptions, function (error, response, body) {
+				// 	for (let i = 0; i < body.tracks.length; i++) {
+				// 		console.log(body.tracks[i].name);
+				// 	}
+				// });
 
 				// we can also pass the token to the browser to make requests from there
 				res.redirect(
