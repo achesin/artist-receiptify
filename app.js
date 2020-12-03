@@ -118,6 +118,12 @@ app.get('/callback', function (req, res) {
 					headers: { Authorization: 'Bearer ' + access_token },
 					json: true
 				};
+				var searchOptions = {
+					url: 'https://api.spotify.com/v1/search?q=clipping&type=artist',
+					headers: { Authorization: 'Bearer ' + access_token },
+					json: true
+				}
+
 
 				// use the access token to access the Spotify Web API
 
@@ -127,11 +133,11 @@ app.get('/callback', function (req, res) {
 				// 	}
 				// });
 
-				request.get(singlePlaylistOptions, function (error, response, body) {
-					for (let i = 0; i < body.tracks.items.length; i++) {
-						console.log(body.tracks.items[i].track); // .tracks.items[i].track
-					}
-				});
+				// request.get(singlePlaylistOptions, function (error, response, body) {
+				// 	for (let i = 0; i < body.tracks.items.length; i++) {
+				// 		console.log(body.tracks.items[i].track); // .tracks.items[i].track
+				// 	}
+				// });
 
 				// request.get(allPlaylistOptions, function (error, response, body) {
 				// 	for (let i = 0; i < body.items.length; i++) {
@@ -144,6 +150,12 @@ app.get('/callback', function (req, res) {
 				// 		console.log(body.tracks[i].name);
 				// 	}
 				// });
+
+				request.get(searchOptions, function (error, response, body) {
+					for (let i = 0; i < body.artists.items.length; i++) {
+						console.log(body.artists.items[i].name);
+					}
+				});
 
 				// we can also pass the token to the browser to make requests from there
 				res.redirect(

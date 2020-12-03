@@ -35,20 +35,26 @@ var Server = function () {
 		return hashParams;
 	}
 
-	function retrievePlaylists() {
+	
+	function retrieveArtistSearch(search) {
 		$.ajax({
-			url: `https://api.spotify.com/v1/me/playlists?limit=50`,
+			url: `https://api.spotify.com/v1/search?q=${search}&type=artist`,
 			headers: {
 				Authorization: 'Bearer ' + access_token
 			},
 			success: function (response) {
+				console.log(search);
 				var data = {
-					playlistList: response.items,
+					artistName: response.artists.items,
 					json: true
 				};
-				userPlaylistPlaceholder.innerHTML = userPlaylistTemplate({
-					playlists: data.playlistList,
-				});
+				for(var i = 0; i < data.artistName.length; i++) {
+					if(data.artistName[i].name == search) {
+						artistId = data.artistName[i].id;
+					}
+				}
+				console.log(data.artistName);
+				retrieveTopTracks(artistId, search);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				// error handler here
@@ -57,7 +63,7 @@ var Server = function () {
 		});
 	}
 
-	function retrieveArtist(artistId) {
+	function retrieveArtistName(artistId) {
 		$.ajax({
 			url: `https://api.spotify.com/v1/artists/${artistId}`,
 			headers: {
@@ -85,6 +91,7 @@ var Server = function () {
 				Authorization: 'Bearer ' + access_token
 			},
 			success: function (response) {
+				console.log(artistName);
 				var itemNumber = 1;
 				var data = {
 					trackList: response.tracks,
@@ -146,33 +153,6 @@ var Server = function () {
 		});
 	}
 
-	function retrievePlaylistId(playlistName) {
-		$.ajax({
-			url: `https://api.spotify.com/v1/me/playlists?limit=50`,
-			headers: {
-				Authorization: 'Bearer ' + access_token
-			},
-			success: function (response) {
-				var playlistId = "";
-				var data = {
-					playlistList: response.items,
-					json: true
-				};
-				for(var i = 0; i < data.playlistList.length; i++) {
-					if(data.playlistList[i].name == playlistName) {
-						playlistId = data.playlistList[i].id;
-					}
-				}
-				retrieveTracks(playlistId);
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// error handler here
-				console.error("Failed to access playlist endpoint");
-			}
-		});
-	}
-
-
 	var params = getHashParams();
 
 	var access_token = params.access_token,
@@ -191,7 +171,6 @@ var Server = function () {
 				success: function (response) {
 					displayName = response.display_name.toUpperCase();
 					$('#login').hide();
-					retrievePlaylists();
 					$('#loggedin').show();
 				}
 			});
@@ -201,7 +180,7 @@ var Server = function () {
 			$('#loggedin').hide();
 		}
 
-		document.getElementById("submit").addEventListener("click", function(){ retrieveArtist("6ueGR6SWhUJfvEhqkvMsVs"); });
+		document.getElementById("submit").addEventListener("click", function(){ retrieveArtistSearch(document.getElementById("selection").elements[0].value); });
 		// "0TnOYISbd1XYRBk9myaseg" pitbull
 		// "6ueGR6SWhUJfvEhqkvMsVs" janelle monae
 	}

@@ -24,7 +24,9 @@
 			<div id="loggedin">
 				<h1>Receiptify</h1>
 				<h2>Spotify Artist Top Tracks Receipt Generator</h2>
-				<div id="dropdown"></div>
+				<form id="selection">
+					<input type="text" placeholder="Search.." name="search">
+				</form>
 				<div id="options">
 					<button class="btn" id="submit">Submit</button>
 				</div>
@@ -33,15 +35,6 @@
 		</div>
 
 		<script id="user-playlists-template" type="text/x-handlebars-template">
-			<form id="selection">
-				<label for="playlists">Choose a playlist:</label>
-				<select name="playlists" id="playlists">
-				  {{#each playlists}}
-				  <option id="playlist">{{this.name}}</option>
-				  {{/each}}
-				</select>
-				<br><br>
-			  </form>
 		  </script>
 
 		<script id="user-profile-template" type="text/x-handlebars-template">
