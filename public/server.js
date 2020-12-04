@@ -43,44 +43,22 @@ var Server = function () {
 				Authorization: 'Bearer ' + access_token
 			},
 			success: function (response) {
-				console.log(search);
 				var artistId = "";
 				var data = {
 					artistName: response.artists.items,
 					json: true
 				};
+				//TODO: need to find a better way to do this
 				for(var i = 0; i < data.artistName.length; i++) {
 					if(data.artistName[i].name == search) {
 						artistId = data.artistName[i].id;
 					}
 				}
 				if(artistId !== "") {
-					console.log(data.artistName);
 					retrieveTopTracks(artistId, search);
 				} else {
-					console.log("failure");
+					console.log("Not able to find artist");
 				}
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				// error handler here
-				console.error("Failed to access playlist endpoint");
-			}
-		});
-	}
-
-	function retrieveArtistName(artistId) {
-		$.ajax({
-			url: `https://api.spotify.com/v1/artists/${artistId}`,
-			headers: {
-				Authorization: 'Bearer ' + access_token
-			},
-			success: function (response) {
-				console.log(response);
-				var data = {
-					artistName: response.name,
-					json: true
-				};
-				retrieveTopTracks(artistId, data.artistName);
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				// error handler here
@@ -96,7 +74,6 @@ var Server = function () {
 				Authorization: 'Bearer ' + access_token
 			},
 			success: function (response) {
-				console.log(artistName);
 				var itemNumber = 1;
 				var data = {
 					trackList: response.tracks,

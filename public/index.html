@@ -18,15 +18,18 @@
 					This website was inspired by the Instagram account <a href="https://www.instagram.com/albumreceipts/">@albumreceipts</a>!</p>
 				</p>
 				<p class="info">
-					Original by <a href="https://michellexliu.github.io/">Michelle Liu</a>, modified by Amanda Chesin.</p>
+					Original by <a href="https://michellexliu.github.io/">Michelle Liu</a>, modified by <a href="https://github.com/achesin">Amanda Chesin</a>.</p>
 				</p>
 			</div>
 			<div id="loggedin">
 				<h1>Receiptify</h1>
 				<h2>Spotify Artist Top Tracks Receipt Generator</h2>
-				<form id="selection">
-					<input type="text" placeholder="Search.." name="search">
+				<form autocomplete="off" id="selection">
+					<div class="autocomplete" style="width:300px;">
+						<input type="text" id="myInput" placeholder="Search for an artist.." name="search">
+					</div>
 				</form>
+				<br></br>
 				<div id="options">
 					<button class="btn" id="submit">Submit</button>
 				</div>
@@ -106,10 +109,10 @@
 					CARD #: **** **** **** 2020
 				</p>
 				<p class='date'>
-					AUTH CODE: 053183
+					AUTH CODE: 051217
 				</p>
 				<p class='date'>
-					CARDHOLDER: {{name}}
+					CARDHOLDER: {{this.title}}
 				</p>
 				<div class='thanks'>
 					<p>
@@ -126,5 +129,6 @@
 		<script src="dom-to-image.min.js"></script>
 		<script src="FileSaver.min.js"></script>
 		<script src="server.js"></script>
+		<script src="search.js"></script>
 	</body>
 </html>

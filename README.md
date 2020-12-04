@@ -3,7 +3,8 @@ Web application inspired by https://www.instagram.com/albumreceipts/ and  https:
 
 I do not take credit for this idea, I just wanted to mess around with the Spotify APIs and see what I could create!
 
-## Notes
+## Notes/ TODO
+There is currently a bug for when there are artists of the same name that can be selected. If you select the second or third one of the same name, it will return the data for the first.
 
 ## Running the App Locally
 
