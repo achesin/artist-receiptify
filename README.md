@@ -4,7 +4,6 @@ Web application inspired by https://www.instagram.com/albumreceipts/ and  https:
 I do not take credit for this idea, I just wanted to mess around with the Spotify APIs and see what I could create!
 
 ## Notes
-Only the 50 most recent playlists can appear in the dropdown as their is a limit on how many values can be pulled from Spotify's API. If there's a playlist further down in your list you want to see, just use the Desktop app and drag it to the top (it'll change the ordering).
 
 ## Running the App Locally
 
@@ -21,7 +20,7 @@ To do so, go to [your Spotify for Developers Dashboard](https://beta.developer.s
 
 * http://localhost:3000/callback
 
-Once you have created your app, load the `client_id`, `redirect_uri` and `client_secret` into a `config.js` file.
+Once you have created your app, load the `client_id`, `redirect_uri` and `client_secret` into a `.env` file. You can see an example under `.env.dist`
 
 In order to run the app, open the folder, and run its `app.js` file:
 

@@ -44,6 +44,7 @@ var Server = function () {
 			},
 			success: function (response) {
 				console.log(search);
+				var artistId = "";
 				var data = {
 					artistName: response.artists.items,
 					json: true
@@ -53,8 +54,12 @@ var Server = function () {
 						artistId = data.artistName[i].id;
 					}
 				}
-				console.log(data.artistName);
-				retrieveTopTracks(artistId, search);
+				if(artistId !== "") {
+					console.log(data.artistName);
+					retrieveTopTracks(artistId, search);
+				} else {
+					console.log("failure");
+				}
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				// error handler here
